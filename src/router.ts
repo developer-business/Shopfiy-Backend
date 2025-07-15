@@ -21,7 +21,6 @@ router.get('/event/getAllNFTEvents', NFTEventController.getNFTAllEvents as Reque
 
 //User site routes
 router.post('/getUserNFTs', UserController.getUserNFTs as RequestHandler);
-router.post('/transferNFT', UserController.transferNFT as RequestHandler);
 router.post('/updateUser', UserController.updateUser as RequestHandler);
 router.post('/getUserWallet', UserController.getUserWallet as RequestHandler);
 
@@ -32,6 +31,6 @@ router.post('/auth/claim-wallet-address', HubsAIController.claimWalletAddress as
 router.post('/auth/setup-profile', HubsAIController.setupProfile as RequestHandler);
 router.post('/auth/update-profile', HubsAIController.updateProfile as RequestHandler);
 router.post('/getUserNFTs', UserController.getUserNFTs as RequestHandler);
-
+router.post('/transferNFT', UserController.transferNFT as RequestHandler);
 
 export default router;

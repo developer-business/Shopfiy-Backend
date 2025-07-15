@@ -23,12 +23,18 @@ export const UserController = {
     transferNFT: async (req: Request, res: Response) => {
         try {
             const { transferAddress, NFTAddress, userEmail } = req.body;
+        
             const getUserInfo = await UserService.getUserByEmail(userEmail);
-            if (!getUserInfo || getUserInfo.length === 0) {
+            if (!getUserInfo || getUserInfo.length === 0 || getUserInfo[0].privatekey === null || getUserInfo[0].privatekey === undefined || getUserInfo[0].privatekey === '' || getUserInfo[0].privatekey === 'null' || getUserInfo[0].privatekey === 'undefined' || getUserInfo[0].privatekey === 'null' || getUserInfo[0].privatekey === 'undefined') {
                 throw new Error('User not found');
             }
             const userWalletPrivateKey = getUserInfo[0].privatekey;
+            console.log("‼️userWalletPrivateKey:", userWalletPrivateKey)
             const transferNFT = await transferNFTToUser(NFTAddress, transferAddress, userWalletPrivateKey);
+            console.log("transferNFT:", transferNFT)
+            if (transferNFT === false) {
+                return res.status(400).json({ message: 'NFT transfer failed' });
+            }
             const netUserNft = await ProductService.deleteUserProductHistory(userEmail, NFTAddress);
             return res.status(200).json({
                 message: 'NFT transferred successfully',
